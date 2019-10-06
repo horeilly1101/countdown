@@ -1,4 +1,4 @@
 
 class GameState:
-    def __init__(self, scores, deck):
+    def __init__(self, deck):
         pass
