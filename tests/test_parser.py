@@ -1,7 +1,6 @@
-"""File that contains testing suite for the Countdown game."""
+"""File that contains the testing suite for Parser."""
 import unittest
 from countdown.parser import Parser
-from countdown.expression import *
 
 
 class TestParser(unittest.TestCase):
@@ -48,12 +47,3 @@ class TestParser(unittest.TestCase):
 
     def test_order_of_operations(self):
         pass
-
-
-class TestExpression(unittest.TestCase):
-    def test_evaluate(self):
-        pass
-
-    def test_get_numbers(self):
-        expr1 = Add(Multiply(Number(5), Number(7)), Number(8))
-        # should_contain

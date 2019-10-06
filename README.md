@@ -1,6 +1,6 @@
 # countdown
 
-Console-based implementation of the Countdown numbers game.
+> IN DEVELOPMENT: Console-based implementation of the Countdown numbers game.
 
 ## Rules
 
