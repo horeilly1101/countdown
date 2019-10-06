@@ -13,6 +13,9 @@ class Add(Expression):
         self.term1 = term1
         self.term2 = term2
 
+    def __str__(self):
+        return f"Add({self.term1}, {self.term2})"
+
     def evaluate(self) -> int:
         return self.term1.evaluate() + self.term2.evaluate()
 
