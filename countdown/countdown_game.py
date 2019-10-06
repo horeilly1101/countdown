@@ -8,12 +8,22 @@ from typing import Tuple, List
 
 
 class CountdownGame:
+    """
+    Class that represents the game state.
+    """
     def __init__(self):
         self._deck = Deck()
         self._parser = Parser()
         self._generator = RandomExpressionGenerator()
 
     def _check_validity(self, expression: Expression, cards: List[int]) -> bool:
+        """
+        Check that only valid numbers have been used in the input expression.
+
+        :param expression: input expression
+        :param cards: list of cards
+        :return: whether or not the input expression only uses the cards given.
+        """
         # we want to check whether the (sorted) list of numbers in the
         # expression is a subsequence of the (sorted) cards
         sorted_cards = sorted(cards)
@@ -22,15 +32,28 @@ class CountdownGame:
         return utils.is_valid_subsequence(sorted_cards, sorted_numbers)
 
     def _compute_goal(self, cards) -> Tuple[Expression, int]:
+        """
+        Compute the goal for each round.
+
+        :param cards: list of cards for the round
+        :return: the goal expression and evaluation in a tuple
+        """
         # randomly generate an expression with the given cards
         expr = self._generator.generate_expression(cards)
         return expr, expr.evaluate()
 
-    def start(self):
+    def start(self) -> None:
+        """
+        Start the game in the main thread.
+        """
         print(display_text.RULES)
         self._play_round(1)
 
-    def _play_round(self, round_num):
+    def _play_round(self, round_num) -> None:
+        """
+        Play a round of the countdown game.
+        :param round_num: the number of the round (e.g. 4)
+        """
         # initialize the game state for the round
         cards = self._deck.draw_six_cards()
         goal_expression, goal = self._compute_goal(cards)
@@ -58,16 +81,26 @@ class CountdownGame:
 
         self._move_to_next_round(round_num + 1)
 
-    def _move_to_next_round(self, round_num):
+    def _move_to_next_round(self, round_num) -> None:
+        """
+        Move to the next round, if fewer than 5 rounds have been played, and the
+        user wants to.
+
+        :param round_num: the number of the next round
+        :return:
+        """
         # stop playing after 5 rounds, or when the user wants to quit
         if round_num < 5:
             keep_playing = input(display_text.CONTINUE_PLAYING)
             if keep_playing.strip() == "y":
-                self._play_round(round_num + 1)
+                self._play_round(round_num)
             else:
                 self.end()
         else:
             self.end()
 
-    def end(self):
+    def end(self) -> None:
+        """
+        End the game.
+        """
         print(display_text.END_GAME)
