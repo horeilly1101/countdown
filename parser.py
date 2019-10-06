@@ -1,6 +1,6 @@
 
 from lark import Lark, Transformer
-from expression import Add, Multiply, Subtract, Divide
+from expression import Add, Multiply, Subtract, Divide, Number
 
 
 _expression_parser = Lark(r"""
@@ -8,16 +8,22 @@ _expression_parser = Lark(r"""
             | expr MINUS term
             | term
             
-    term    : term TIMES NUMBER
-            | term DIVIDES NUMBER
-            | NUMBER
+    term    : term TIMES base
+            | term DIVIDES base
+            | base
+    
+    base    : INT
+            | LPAREN expr RPAREN
     
     PLUS    : "+"
     DIVIDES : "/"
     MINUS   : "-"
     TIMES   : "*"
     
-    %import common.NUMBER
+    LPAREN  : "("
+    RPAREN  : ")"
+    
+    %import common.INT
     %import common.WS
     %ignore WS
     """, start='expr')
@@ -47,9 +53,13 @@ class _TreeToExpression(Transformer):
         (num,) = values
         return num
 
-    def number(self, num):
-        (num,) = num
-        return int(num)
+    def base(self, values):
+        if len(values) == 3:
+            lparen, expr, rparen = values
+            return expr
+
+        (num,) = values
+        return Number(int(num))
 
 
 class Parser:
