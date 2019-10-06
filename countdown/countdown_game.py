@@ -2,7 +2,7 @@ from countdown.deck import Deck
 from countdown.parser import Parser
 from countdown.expression import *
 from countdown.random_expression_generator import RandomExpressionGenerator
-from countdown.responses import *
+import countdown.display_text as display_text
 import countdown.utils as utils
 from typing import Tuple, List
 
@@ -27,7 +27,7 @@ class CountdownGame:
         return expr, expr.evaluate()
 
     def start(self):
-        print(RULES)
+        print(display_text.RULES)
         self._play_round(1)
 
     def _play_round(self, round_num):
@@ -36,27 +36,32 @@ class CountdownGame:
         goal_expression, goal = self._compute_goal(cards)
 
         # get the user's answer
-        response = input(START_ROUND(round_num, cards, goal))
+        round_text = display_text.START_ROUND(round_num, cards, goal)
+        response = utils.timed_input(round_text, 30)
+        if response is None:
+            print(display_text.OUT_OF_TIME(goal_expression, goal))
+            self._move_to_next_round(round_num + 1)
+
         expression = self._parser.parse(response)
 
         # check validity
         if not self._check_validity(expression, cards):
-            print(INVALID_INPUT)
+            print(display_text.INVALID_INPUT(goal_expression, goal))
             self._move_to_next_round(round_num + 1)
 
         # figure out whether or not the answer was correct
         result = expression.evaluate()
         if result == goal:
-            print(CORRECT_ANSWER(expression, result))
+            print(display_text.CORRECT_ANSWER(expression, result))
         else:
-            print(INCORRECT_ANSWER(expression, result, goal_expression, goal))
+            print(display_text.INCORRECT_ANSWER(expression, result, goal_expression, goal))
 
         self._move_to_next_round(round_num + 1)
 
     def _move_to_next_round(self, round_num):
         # stop playing after 5 rounds, or when the user wants to quit
         if round_num < 5:
-            keep_playing = input(CONTINUE_PLAYING)
+            keep_playing = input(display_text.CONTINUE_PLAYING)
             if keep_playing.strip() == "y":
                 self._play_round(round_num + 1)
             else:
@@ -65,4 +70,4 @@ class CountdownGame:
             self.end()
 
     def end(self):
-        print(END_GAME)
+        print(display_text.END_GAME)

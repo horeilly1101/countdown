@@ -28,13 +28,22 @@ def START_ROUND(round_num, cards, goal) -> str:
     """
 
 
-INVALID_INPUT: str = f"""
+def OUT_OF_TIME(goal_expression, goal_result) -> str:
+    return f"""
+    You ran out of time! Please try again in the next round.
+    Our solution was {goal_expression} = {goal_result}.
+    """
+
+
+def INVALID_INPUT(goal_expression, goal_result) -> str:
+    return f"""
     Your response was invalid! Please try again in the next 
-    round.
-"""
+    round. 
+    Our solution was {goal_expression} = {goal_result}.
+    """
 
 
-def CORRECT_ANSWER(expression, result):
+def CORRECT_ANSWER(expression, result) -> str:
     return f"""
     Congratulations!
     You submitted {expression} = {result}, which was exactly
@@ -42,7 +51,7 @@ def CORRECT_ANSWER(expression, result):
     """
 
 
-def INCORRECT_ANSWER(expression, result, goal_expression, goal_result):
+def INCORRECT_ANSWER(expression, result, goal_expression, goal_result) -> str:
     return f"""
     You submitted {expression} = {result}.
     Our solution was {goal_expression} = {goal_result}.
