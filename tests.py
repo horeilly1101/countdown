@@ -1,6 +1,6 @@
 """File that contains testing suite for the Countdown game."""
 import unittest
-from parser import Parser
+from countdown.parser import Parser
 
 
 class TestParser(unittest.TestCase):
