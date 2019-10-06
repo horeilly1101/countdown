@@ -1,5 +1,6 @@
-
+"""File that contains our various Expression classes."""
 from abc import ABC, abstractmethod
+from typing import List
 
 
 class Expression(ABC):
@@ -21,10 +22,17 @@ class Expression(ABC):
         return self.evaluate() == other.evaluate()
 
     @abstractmethod
+    def get_numbers(self) -> List[int]:
+        """
+        :return: a list of the numbers contained within the expression.
+        (e.g. 9+5+8*9 might return [9,5,8,9])
+        """
+
+    @abstractmethod
     def evaluate(self) -> int:
         """
         Evaluate the expression, and output an integer. For example, evaluating
-        4 + 5 * 6 would output 34.
+        4 + (5 * 6) would output 34.
 
         :return: integer result
         """
@@ -45,6 +53,9 @@ class Add(Expression):
     def __str__(self) -> str:
         return f"({self.term1} + {self.term2})"
 
+    def get_numbers(self) -> List[int]:
+        return self.term1.get_numbers() + self.term2.get_numbers()
+
     def evaluate(self) -> int:
         return self.term1.evaluate() + self.term2.evaluate()
 
@@ -63,6 +74,9 @@ class Subtract(Expression):
 
     def __str__(self) -> str:
         return f"({self.term1} - {self.term2})"
+
+    def get_numbers(self) -> List[int]:
+        return self.term1.get_numbers() + self.term2.get_numbers()
 
     def evaluate(self) -> int:
         return self.term1.evaluate() - self.term2.evaluate()
@@ -83,6 +97,9 @@ class Multiply(Expression):
     def __str__(self) -> str:
         return f"({self.factor1} * {self.factor2})"
 
+    def get_numbers(self) -> List[int]:
+        return self.factor1.get_numbers() + self.factor2.get_numbers()
+
     def evaluate(self) -> int:
         return self.factor1.evaluate() * self.factor2.evaluate()
 
@@ -101,6 +118,9 @@ class Divide(Expression):
 
     def __str__(self) -> str:
         return f"({self.dividend} / {self.divisor})"
+
+    def get_numbers(self) -> List[int]:
+        return self.dividend.get_numbers() + self.divisor.get_numbers()
 
     def evaluate(self) -> int:
         # memoize evaluations
@@ -130,6 +150,9 @@ class Number(Expression):
 
     def __str__(self) -> str:
         return str(self.num)
+
+    def get_numbers(self) -> List[int]:
+        return [self.num]
 
     def evaluate(self) -> int:
         return self.num

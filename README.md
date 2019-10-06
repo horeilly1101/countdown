@@ -11,3 +11,5 @@ Console-based implementation of the Countdown numbers game.
 ## External Libraries
 
 ## Testing
+
+Tests were set up with the unittest python module. You can run them all with `python3 -m unittest`.

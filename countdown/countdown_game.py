@@ -15,7 +15,10 @@ class CountdownGame:
     def _compute_goal(self) -> Tuple[Expression, int]:
         pass
 
-    def play(self):
+    def start(self):
+        pass
+
+    def play_round(self):
         cards = self._deck.draw_six_cards()
         goal_expression, goal = self._compute_goal()
 
@@ -36,13 +39,13 @@ class CountdownGame:
         Your answer:"""
         response = input(user_query)
         expression = self._parser.parse(response)
-        result = expression.evaluate()
 
         if not self._check_validity(expression, cards):
             print("\t\tYour response was invalid! Please try again "
                   "in the next round.")
             return
 
+        result = expression.evaluate()
         result_message = f"""
         You submitted {expression} = {result}.
         Our solution was {goal_expression} = {result}.
