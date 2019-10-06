@@ -4,6 +4,9 @@ from countdown.parser import Parser
 
 
 class TestParser(unittest.TestCase):
+    """
+    Testing Suite for the Parser class.
+    """
     def setUp(self) -> None:
         self.parser = Parser()
 

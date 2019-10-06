@@ -4,7 +4,12 @@ class _Card:
 
 
 class Deck:
-    def __init__(self, cards_remaining=(4,)*13):
-        self.cards_remaining = cards_remaining
+    def __init__(self):
+        self._cards = [4] * 13
 
-    def draw(self):
+    def _draw(self):
+        num_cards_remaining = sum(self._cards)
+        pass
+
+    def draw_six_cards(self):
+        pass
