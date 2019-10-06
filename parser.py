@@ -3,7 +3,7 @@ from lark import Lark, Transformer
 from expression import Add, Multiply, Subtract, Divide
 
 
-expression_parser = Lark(r"""
+_expression_parser = Lark(r"""
     expr    : expr PLUS term
             | expr MINUS term
             | term
@@ -23,8 +23,9 @@ expression_parser = Lark(r"""
     """, start='expr')
 
 
-class TreeToExpression(Transformer):
+class _TreeToExpression(Transformer):
     def expr(self, values):
+        # in this
         if len(values) == 3:
             term1, op, term2 = values
             if op == "+":
@@ -51,8 +52,11 @@ class TreeToExpression(Transformer):
         return int(num)
 
 
-if __name__ == "__main__":
-    text = '89+90+9+   8* 78'
-    tree = expression_parser.parse(text)
-    print(TreeToExpression().transform(tree))
-    # print( json_parser.parse(text).pretty() )
+class Parser:
+    def __init__(self):
+        self._parser = _expression_parser
+        self._transformer = _TreeToExpression()
+
+    def parse(self, expression_str):
+        tree = self._parser.parse(expression_str)
+        return self._transformer.transform(tree)
