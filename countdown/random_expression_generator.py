@@ -1,5 +1,5 @@
+"""File that contains the RandomExpressionGenerator."""
 from random import randint, choice
-
 from countdown.expression import Add, Multiply, Divide, Subtract, Expression, Number
 
 

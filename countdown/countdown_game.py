@@ -1,11 +1,14 @@
+"""File that contains the CountdownGame."""
+from typing import Tuple, List
+
+from lark.exceptions import LarkError
+
 from countdown.deck import Deck
 from countdown.parser import Parser
-from countdown.expression import *
+from countdown.expression import Expression
 from countdown.random_expression_generator import RandomExpressionGenerator
 import countdown.display_text as display_text
 import countdown.utils as utils
-from typing import Tuple, List
-from lark.exceptions import LarkError
 
 
 class CountdownGame:
@@ -61,29 +64,30 @@ class CountdownGame:
 
         # get the user's answer
         round_text = display_text.START_ROUND(round_num, cards, goal)
-        response = utils.timed_input(round_text, 30)
-        if response is None:
-            print(display_text.OUT_OF_TIME(goal_expression, goal))
-            self._move_to_next_round(round_num)
-            return
+        response = input(round_text)
 
+        # parse the input expression
         try:
             expression = self._parser.parse(response)
         except LarkError:
-            self._respond_to_invalid_input(round_num, goal_expression, goal)
+            print(display_text.PARSE_ERROR)
+            self._move_to_next_round(round_num)
             return
 
         # check validity
         if not self._check_validity(expression, cards):
-            self._respond_to_invalid_input(round_num, goal_expression, goal)
+            print(display_text.INVALID_NUMBERS_ERROR)
+            self._move_to_next_round(round_num)
 
-        # figure out whether or not the answer was correct
+        # evaluate the input expression
         try:
             result = expression.evaluate()
         except ValueError:
-            self._respond_to_invalid_input(round_num, goal_expression, goal)
+            print(display_text.EVALUATION_ERROR)
+            self._move_to_next_round(round_num)
             return
 
+        # figure out whether or not the answer was correct
         if result == goal:
             print(display_text.CORRECT_ANSWER(expression, result))
         else:
@@ -91,23 +95,18 @@ class CountdownGame:
 
         self._move_to_next_round(round_num)
 
-    def _respond_to_invalid_input(self, round_num, goal_expression, goal) -> None:
-        print(display_text.INVALID_INPUT(goal_expression, goal))
-        self._move_to_next_round(round_num)
-
-    def _move_to_next_round(self, round_num) -> None:
+    def _move_to_next_round(self, next_round_num) -> None:
         """
         Move to the next round, if fewer than 5 rounds have been played, and the
         user wants to.
 
-        :param round_num: the number of the next round
-        :return:
+        :param next_round_num: the number of the next round
         """
         # stop playing after 5 rounds, or when the user wants to quit
-        if round_num < 5:
+        if next_round_num < 5:
             keep_playing = input(display_text.CONTINUE_PLAYING)
             if keep_playing.strip() == "y":
-                self._play_round(round_num + 1)
+                self._play_round(next_round_num + 1)
             else:
                 self.end()
         else:

@@ -47,6 +47,3 @@ class TestParser(unittest.TestCase):
 
         result2 = self.parser.parse("(5*7)+9")
         self.assertEqual(44, result2.evaluate())
-
-    def test_order_of_operations(self):
-        pass

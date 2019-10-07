@@ -6,7 +6,8 @@ from countdown.expression import *
 class TestExpression(unittest.TestCase):
     """Test suite for our Expressions."""
     def test_evaluate(self):
-        pass
+        expr1 = Add(Number(3), Add(Number(9), Number(7)))
+        self.assertEqual(19, expr1.evaluate())
 
     def test_get_numbers(self):
         expr1 = Add(Multiply(Number(5), Number(7)), Number(8))

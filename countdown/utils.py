@@ -1,5 +1,4 @@
 """File that contains various utility functions."""
-from threading import Timer
 
 
 def is_valid_subsequence(sequence, subsequence_candidate) -> bool:
@@ -18,26 +17,3 @@ def is_valid_subsequence(sequence, subsequence_candidate) -> bool:
             i = i + 1
 
     return i >= len(subsequence_candidate)
-
-
-def timed_input(text: str, time_limit):
-    """
-    Get a user's input, but with a time limit. Return None if they don't
-    respond within the time limit.
-
-    Reference: https://stackoverflow.com/questions/15528939/python-3-timed-input
-
-    :param text: text to be displayed to user
-    :param time_limit: time (in seconds) the user has to respond
-    :return: user's response, or None if they don't respond
-    """
-    answer_on_time = True
-    timer = Timer(time_limit, print, ["Time's up! Press Enter to continue."])
-    timer.start()
-    answer = input(text)
-    timer.cancel()
-    return answer
-
-
-if __name__ == "__main__":
-    timed_input("hello", 5)
