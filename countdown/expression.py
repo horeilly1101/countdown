@@ -127,10 +127,12 @@ class Divide(Expression):
         evaluated_dividend = self.dividend.evaluate()
         evaluated_divisor = self.divisor.evaluate()
 
-        if evaluated_divisor == 0:  # check division by zero
+        # check division by zero
+        if evaluated_divisor == 0:
             raise ValueError("Can't divide by zero!")
 
-        if evaluated_dividend % evaluated_divisor != 0:  # make sure division yields an integer
+        # make sure division yields an integer
+        if evaluated_dividend % evaluated_divisor != 0:
             raise ValueError("All functions must map to the integers!")
 
         return int(self.dividend.evaluate() / self.divisor.evaluate())

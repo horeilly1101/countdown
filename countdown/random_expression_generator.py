@@ -39,8 +39,11 @@ class RandomExpressionGenerator:
         expr1 = self._generate_expression_helper(numbers[:rand_idx])
         expr2 = self._generate_expression_helper(numbers[rand_idx:])
 
+        result1 = expr1.evaluate()
+        result2 = expr2.evaluate()
+
         # check if division is valid
-        if expr1.evaluate() % expr2.evaluate() == 0:
+        if result2 != 0 and result1 % result2 == 0:
             op = choice(self._OPERATORS)
             return op(expr1, expr2)
 

@@ -103,5 +103,6 @@ for a project called [deriv](https://github.com/horeilly1101/deriv).
 Tests were set up with the unittest python module. You can run them with:
 
 ```
+# start in the countdown/ directory
 python3 -m unittest
 ```
