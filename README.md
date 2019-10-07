@@ -51,18 +51,39 @@ python3 play_game.py
 
 ## Implementation Details
 
-Below, I will detail the key parts of the system I designed and
-how they interact.
-
 ### Expression
 
-### Rancom Expression Generator
+An `Expression` models a mathematical expression, like 5 + 2. There are
+several different types of expressions. Most of the implementing
+classes represent operations (e.g. addition, multiplication), and these
+classes are built up recursively out of other Expressions. There is also
+a `Number` implementing class that represents the base case in most of the 
+`Expression` methods. A number is pretty much a wrapper around an int.
+
+### Random Expression Generator
+
+The `RandomExpressionGenerator` takes a list of numbers and (randomly)
+constructs an `Expression` from them. This is how the goal is computed
+in each round of the game.
 
 ### Parser
 
+The `Parser` is used to parse input strings (e.g. `"5+(12/4)"`) into
+corresponding instances of our Expression classes. For example, it
+might parse the string above into 
+`Add(Number(5), Divide(Number(12), Number(3)))`.
+
 ### Deck
 
+The `Deck` keeps track of the cards left in the game, and is responsible
+for picking cards from the deck, uniformly at random. In the context of
+this game, a card is simply an integer between 1 and 13.
+
 ### Countdown Game
+
+The `CountdownGame` keeps track of the game's state between rounds
+and interacts with the player. It also aggregates all of the other
+classes together and is in charge of the game's functionality.
 
 ## External Libraries
 
