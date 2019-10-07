@@ -89,11 +89,14 @@ classes together and is in charge of the game's functionality.
 
 I used Lark to create my Expression parser. Lark is fantastic—I just
 had to specify a grammar and a transformer, and it did all of the
-parsing work for me.
+parsing work for me. I chose Lark because of its simplicity and
+documentation.
 
-You can find it's documentation here, and an example here. To create the
-Expression, I drew heavily on a grammar that I put together for a
-project called deriv.
+You can find it's documentation [here](https://github.com/lark-parser/lark), 
+and an example 
+[here](https://github.com/lark-parser/lark/blob/master/docs/json_tutorial.md). 
+To create the Expression, I drew heavily on a grammar that I put together 
+for a project called [deriv](https://github.com/horeilly1101/deriv).
 
 ## Testing
 
