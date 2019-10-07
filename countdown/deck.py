@@ -28,7 +28,9 @@ class Deck:
             count = count + num_remaining
             if count >= chosen_card:
                 self._cards[card] = self._cards[card] - 1
-                return card
+
+                # account for the fact that lists index at 0
+                return card + 1
 
         raise ValueError("The deck is empty!")
 

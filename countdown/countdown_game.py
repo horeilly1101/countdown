@@ -54,6 +54,7 @@ class CountdownGame:
         Play a round of the countdown game.
         :param round_num: the number of the round (e.g. 4)
         """
+        print("round num: ", round_num)
         # initialize the game state for the round
         cards = self._deck.draw_six_cards()
         goal_expression, goal = self._compute_goal(cards)
@@ -63,23 +64,36 @@ class CountdownGame:
         response = utils.timed_input(round_text, 30)
         if response is None:
             print(display_text.OUT_OF_TIME(goal_expression, goal))
-            self._move_to_next_round(round_num + 1)
+            self._move_to_next_round(round_num)
+            return
 
-        expression = self._parser.parse(response)
+        try:
+            expression = self._parser.parse(response)
+        except:
+            self._respond_to_invalid_input(round_num, goal_expression, goal)
+            return
 
         # check validity
         if not self._check_validity(expression, cards):
-            print(display_text.INVALID_INPUT(goal_expression, goal))
-            self._move_to_next_round(round_num + 1)
+            self._respond_to_invalid_input(round_num, goal_expression, goal)
 
         # figure out whether or not the answer was correct
-        result = expression.evaluate()
+        try:
+            result = expression.evaluate()
+        except ValueError:
+            self._respond_to_invalid_input(round_num, goal_expression, goal)
+            return
+
         if result == goal:
             print(display_text.CORRECT_ANSWER(expression, result))
         else:
             print(display_text.INCORRECT_ANSWER(expression, result, goal_expression, goal))
 
-        self._move_to_next_round(round_num + 1)
+        self._move_to_next_round(round_num)
+
+    def _respond_to_invalid_input(self, round_num, goal_expression, goal) -> None:
+        print(display_text.INVALID_INPUT(goal_expression, goal))
+        self._move_to_next_round(round_num)
 
     def _move_to_next_round(self, round_num) -> None:
         """
@@ -93,7 +107,7 @@ class CountdownGame:
         if round_num < 5:
             keep_playing = input(display_text.CONTINUE_PLAYING)
             if keep_playing.strip() == "y":
-                self._play_round(round_num)
+                self._play_round(round_num + 1)
             else:
                 self.end()
         else:
