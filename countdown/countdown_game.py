@@ -78,6 +78,7 @@ class CountdownGame:
         if not self._check_validity(expression, cards):
             print(display_text.INVALID_NUMBERS_ERROR)
             self._move_to_next_round(round_num)
+            return
 
         # evaluate the input expression
         try:

@@ -27,7 +27,7 @@ def START_ROUND(round_num, cards, goal) -> str:
     
     Your cards are {[card for card in cards]}.
     Your goal is {goal}.
-    """
+    Your answer: """
 
 
 PARSE_ERROR: str = """
