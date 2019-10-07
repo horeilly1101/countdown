@@ -34,7 +34,7 @@ You may use parentheses.
 
 ## How to Run
 
-You will need at least *Python 3.6.5* installed on your machine. 
+You will need at least **Python 3.6.5** installed on your machine. 
 Set up the environment and install dependencies.
 
 ```
