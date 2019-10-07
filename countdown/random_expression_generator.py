@@ -1,5 +1,6 @@
 """File that contains the RandomExpressionGenerator."""
-from random import randint, choice
+from random import randint, choice, shuffle
+from copy import copy
 from countdown.expression import Add, Multiply, Divide, Subtract, Expression, Number
 
 
@@ -57,4 +58,6 @@ class RandomExpressionGenerator:
         :param numbers: input numbers
         :return: generated Expression
         """
-        return self._generate_expression_helper(numbers)
+        numbers_copy = copy(numbers)
+        shuffle(numbers_copy)
+        return self._generate_expression_helper(numbers_copy)
