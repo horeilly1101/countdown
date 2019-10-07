@@ -37,7 +37,7 @@ You may use parentheses.
 Set up the environment and install dependencies.
 
 ```
-# start in the countdown/ directory
+# start in the repository directory
 python3 -m venv venv
 . venv/bin/activate
 pip install -r requirements.txt
@@ -103,6 +103,6 @@ for a project called [deriv](https://github.com/horeilly1101/deriv).
 Tests were set up with the unittest python module. You can run them with:
 
 ```
-# start in the countdown/ directory
+# start in the repository directory
 python3 -m unittest
 ```
