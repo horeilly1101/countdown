@@ -15,7 +15,9 @@ RULES: str = f"""
     You may use parentheses.
     
     You have 60 seconds in each round. Good luck!
-"""
+    
+    Press ENTER to begin.
+    """
 
 
 def START_ROUND(round_num, cards, goal) -> str:
@@ -61,9 +63,9 @@ def INCORRECT_ANSWER(expression, result, goal_expression, goal_result) -> str:
 
 CONTINUE_PLAYING: str = f"""
     Would you like to play again? (y/n)
-"""
+    """
 
 
 END_GAME: str = f"""
     Thanks for playing!
-"""
+    """

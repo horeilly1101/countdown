@@ -22,6 +22,13 @@ class RandomExpressionGenerator:
     ]
 
     def _generate_expression_helper(self, numbers) -> Expression:
+        """
+        Helper method that recursively constructs an Expression at
+        random.
+
+        :param numbers: input numbers
+        :return: generated Expression
+        """
         # base case, create a number
         if len(numbers) == 1:
             return Number(numbers[0])
@@ -41,4 +48,10 @@ class RandomExpressionGenerator:
         return op(expr1, expr2)
 
     def generate_expression(self, numbers) -> Expression:
+        """
+        Generates an Expression that contains the input numbers.
+
+        :param numbers: input numbers
+        :return: generated Expression
+        """
         return self._generate_expression_helper(numbers)

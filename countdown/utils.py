@@ -20,7 +20,7 @@ def is_valid_subsequence(sequence, subsequence_candidate) -> bool:
     return i >= len(subsequence_candidate)
 
 
-def timed_input(input_text: str, time_limit):
+def timed_input(text: str, time_limit):
     """
     Get a user's input, but with a time limit. Return None if they don't
     respond within the time limit.
@@ -34,9 +34,10 @@ def timed_input(input_text: str, time_limit):
     answer_on_time = True
     timer = Timer(time_limit, print, ["Time's up! Press Enter to continue."])
     timer.start()
-    answer = input(input_text)
+    answer = input(text)
     timer.cancel()
     return answer
 
+
 if __name__ == "__main__":
-    timed_input("hello", "bye", 5)
+    timed_input("hello", 5)

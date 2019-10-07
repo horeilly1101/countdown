@@ -1,4 +1,4 @@
-
+"""File that contains the Parser class."""
 from lark import Lark, Transformer
 from countdown.expression import Add, Multiply, Subtract, Divide, Number,  Expression
 
@@ -6,6 +6,9 @@ from countdown.expression import Add, Multiply, Subtract, Divide, Number,  Expre
 # --------------------
 # Grammar definition for our Expressions, as needed for the
 # Lark parser.
+#
+# Documentation: https://github.com/lark-parser/lark
+# Example: https://github.com/lark-parser/lark/blob/master/docs/json_tutorial.md
 # --------------------
 _expression_parser = Lark(r"""
     expr    : expr PLUS term

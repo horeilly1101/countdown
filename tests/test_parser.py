@@ -24,6 +24,9 @@ class TestParser(unittest.TestCase):
         result2 = self.parser.parse("67-9")
         self.assertEqual(58, result2.evaluate())
 
+        result2 = self.parser.parse("(67-9)")
+        self.assertEqual(58, result2.evaluate())
+
     def test_multiply(self):
         result1 = self.parser.parse("5*5*5")
         self.assertEqual(125, result1.evaluate())

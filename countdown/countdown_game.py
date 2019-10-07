@@ -5,6 +5,7 @@ from countdown.random_expression_generator import RandomExpressionGenerator
 import countdown.display_text as display_text
 import countdown.utils as utils
 from typing import Tuple, List
+from lark.exceptions import LarkError
 
 
 class CountdownGame:
@@ -46,7 +47,7 @@ class CountdownGame:
         """
         Start the game in the main thread.
         """
-        print(display_text.RULES)
+        input(display_text.RULES)
         self._play_round(1)
 
     def _play_round(self, round_num) -> None:
@@ -54,7 +55,6 @@ class CountdownGame:
         Play a round of the countdown game.
         :param round_num: the number of the round (e.g. 4)
         """
-        print("round num: ", round_num)
         # initialize the game state for the round
         cards = self._deck.draw_six_cards()
         goal_expression, goal = self._compute_goal(cards)
@@ -69,7 +69,7 @@ class CountdownGame:
 
         try:
             expression = self._parser.parse(response)
-        except:
+        except LarkError:
             self._respond_to_invalid_input(round_num, goal_expression, goal)
             return
 
